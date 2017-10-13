@@ -35,7 +35,7 @@ const User = function (sequelize, Sequelize) {
             updatedAt: "updated_at",
             //静态方法，即user模型自带的方法
             // classMethods: classMethods,
-            comment: "用户信息",
+            comment: "用户信息"
             // indexes: [{
             //     name: "loginInfo_userId",
             //     method: "BTREE",
@@ -43,5 +43,4 @@ const User = function (sequelize, Sequelize) {
             // }]
         })
 }
-sequelize.sync({ force: false })
 module.exports = User
