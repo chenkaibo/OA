@@ -1,30 +1,29 @@
 'use strict'
 
 const { sequelize } = require('../../common/db')
-const User = sequelize.import('../../model/user.model.js')
-const Daily = sequelize.import('../../model/daily.model.js')
+const Performance = sequelize.import('../../model/performance.model.js')
 
 exports.getAll = async (ctx) => {
     try {
-        const users = await User.findAll()
+        const performances = await Performance.findAll()
         ctx.status = 200
-        ctx.body = users.values
+        ctx.body = performances.values
     } catch (error) {
         ctx.throw(error)
     }
 }
 exports.getOne = async (ctx) => {
     try {
-        const user = await User.findById(ctx.params.id)
+        const performance = await Performance.findById(ctx.params.id)
         ctx.status = 200
-        ctx.body = user.values
+        ctx.body = performance.values
     } catch (error) {
         ctx.throw(error)
     }
 }
 exports.add = async (ctx) => {
     try {
-        await User.create(ctx.request.body)
+        await Performance.create(ctx.request.body)
         ctx.status = 201
     } catch (error) {
         ctx.throw(error)
@@ -32,7 +31,7 @@ exports.add = async (ctx) => {
 }
 exports.update = async (ctx) => {
     try {
-        await User.update(ctx.request.body, {
+        await Performance.update(ctx.request.body, {
             where: {
                 id: ctx.params.id
             }
@@ -44,7 +43,7 @@ exports.update = async (ctx) => {
 }
 exports.delete = async (ctx) => {
     try {
-        await User.destroy({
+        await Performance.destroy({
             where: {
                 id: ctx.params.id
             }

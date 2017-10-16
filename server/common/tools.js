@@ -204,3 +204,15 @@ exports.filterDataByCon = (conArr, origin, conStr) => {
   })
   return resArr
 }
+exports.handleSysException = (err, code, message) => {
+  if (err.code) {
+    // if (errorMsg[err.code]) {
+    //   err.message = errorMsg[err.code]
+    // }
+    throw err
+  }
+  console.log(err)
+  const error = new Error(message || '系统内部错误')
+  error.code = code || 500
+  throw error
+}

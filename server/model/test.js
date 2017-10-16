@@ -15,5 +15,5 @@ sequelize.transaction({
             console.log(err)
         }
         console.log(rst)
-    }).then(t.commit.bind(t)).catch(t.rollback.bind(t));
+    }).then(t.commit.bind(t)).catch(t.rollback.bind(t))
 })
