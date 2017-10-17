@@ -1,9 +1,9 @@
 /**
 * 模型关联类
 */
-const { sequelize } = require('../common/db')
+const { sequelize, Sequelize } = require('../common/db')
 const User = sequelize.import('./user.model.js')
-const Daily = sequelize.import('./daily.model.js')
+const Daily = sequelize.model('Daily')
 const Item = sequelize.import('./item.model.js')
 const Performance = sequelize.import('./performance.model.js')
 
@@ -14,5 +14,5 @@ Daily.hasOne(Item)
 Item.belongsTo(Daily)
 User.hasOne(Performance)
 Performance.belongsTo(User)
-//创建表
+// 创建表
 sequelize.sync({ force: true })

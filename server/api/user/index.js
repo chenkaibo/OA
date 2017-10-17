@@ -1,5 +1,5 @@
 'use strict'
-const router = require('koa-router')
+const router = require('koa-router')()
 const controller = require('./user.controller')
 
 router.get('/', controller.getAll)

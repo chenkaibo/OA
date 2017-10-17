@@ -58,12 +58,12 @@ var packs = {
 
 var remothost = {
   config: {
-    host: '192.168.8.204',
+    host: '192.168.8.147',
     port: 22,
     username: 'root',
-    password: 'test-123'
+    password: 'bstar'
   },
-  dir: {
+  dir:{
     client: '/opt/bstar/html',
     server: '/opt/bstar/web/nodejs',
     exportDir: '/home/xian/' + stamp,
@@ -73,14 +73,14 @@ var remothost = {
 
 var remothost_2 = {
   config: {
-    host: '192.168.8.204',
-    //host: '192.168.0.36',
+    //host: '192.168.8.113',
+    host: '192.168.8.36',
     port: 22,
     username: 'root',
-    password: 'test-123'
-    //password: 'admin123'
+    //password: 'bc4-123'
+    password: 'admin888'
   },
-  dir: {
+  dir:{
     client: '/opt/bstar/html',
     server: '/opt/bstar/web/nodejs',
     exportDir: '/home/xian/' + stamp,
@@ -99,7 +99,7 @@ var gulpSSH_2 = new GulpSSH({
 })
 
 gulp.task('scm:update', function (cb) {
-  exec('svn upate', function (err) {
+ exec('svn upate', function(err) {
     if (err) return cb(err) // 返回 error
     cb() // 完成 task
   })
@@ -119,12 +119,12 @@ gulp.task('build:ver', function (cb) {
 gulp.task('clean:client', function (cb) {
   del([
     path.join(exportDir, packs.client.output),
-    path.join(exportDir, packs.client_slim.output)
+    path.join(exportDir , packs.client_slim.output)
   ], cb)
 })
 
 gulp.task('build:client', ['build:ver'], function (cb) {
-  exec('npm run build', function (err) {
+  exec('npm run build', function(err) {
     if (err) return cb(err) // 返回 error
     cb() // 完成 task
   })
@@ -169,7 +169,7 @@ gulp.task('export:zipserver', function (cb) {
 gulp.task('export:offlineserver', function (cb) {
   mkdirp.sync(exportDir)
   var outFile = path.join(exportDir, packs.serverOffline.output)
-  exec('tar -czf ' + outFile + ' ./* --exclude=client --exclude=export', function (err) {
+  exec('tar -czf ' + outFile + ' ./* --exclude=client --exclude=export', function(err) {
     if (err) {
       console.log('export:offlineserver failed: ' + err)
       return cb(err) // 返回 error
@@ -182,7 +182,7 @@ gulp.task('export:offlineserver', function (cb) {
 gulp.task('upload:client', ['build:client'], function (cb) {
   return gulp.src(packs.client_slim.src)
     .pipe(gulpSSH.dest(remothost.dir.client))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -190,7 +190,7 @@ gulp.task('upload:client', ['build:client'], function (cb) {
 gulp.task('uploadonly:client', function (cb) {
   return gulp.src(packs.client_slim.src)
     .pipe(gulpSSH.dest(remothost.dir.client))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -198,7 +198,7 @@ gulp.task('uploadonly:client', function (cb) {
 gulp.task('upload:server', function (cb) {
   return gulp.src(packs.server.src)
     .pipe(gulpSSH.dest(remothost.dir.server))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -207,7 +207,7 @@ gulp.task('uploadonlyhost_2:client', function (cb) {
   console.log('remote host: ' + remothost_2.config.host)
   return gulp.src(packs.client_slim.src)
     .pipe(gulpSSH_2.dest(remothost_2.dir.client))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -216,7 +216,7 @@ gulp.task('uploadhost_2:server', function (cb) {
   console.log('remote host: ' + remothost_2.config.host)
   return gulp.src(packs.server.src)
     .pipe(gulpSSH_2.dest(remothost_2.dir.server))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -224,7 +224,7 @@ gulp.task('uploadhost_2:server', function (cb) {
 gulp.task('update:client', ['build:zipclientslim'], function (cb) {
   return gulp.src(path.join(exportDir, packs.client_slim.output))
     .pipe(gulpSSH.dest(remothost.dir.exportDir))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -232,7 +232,7 @@ gulp.task('update:client', ['build:zipclientslim'], function (cb) {
 gulp.task('updateonly:client', function (cb) {
   return gulp.src(path.join(exportDir, packs.client_slim.output))
     .pipe(gulpSSH.dest(remothost.dir.exportDir))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })
@@ -240,7 +240,7 @@ gulp.task('updateonly:client', function (cb) {
 gulp.task('update:server', ['export:zipserver'], function (cb) {
   return gulp.src(path.join(exportDir, packs.server.output))
     .pipe(gulpSSH.dest(remothost.dir.exportDir))
-    .on('error', function (err) {
+    .on('error', function(err) {
       console.log(err)
     })
 })

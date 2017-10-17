@@ -47,7 +47,8 @@ app.use(require('./middlewares/args.merge'))
 // set cached header no-cached
 app.use(require('./middlewares/noCache'))
 // app.use(require('./middlewares/err.handler'))
-
+// 加载模型关系
+require('./model/ref')
 require('./routes')(app)
 
 module.exports = app
